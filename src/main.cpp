@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
         }
     }
     cout << ip << "   " << port << endl;
-    chdir("/home/w123/Desktop/c_and_c++_code_new/c++/lx/c++httptest/");
+    chdir("请修改成main.cpp所在目录，html目录的../目录");
     g_ser = new server(ip, port);
     g_ser->start();
     return 0;
