@@ -42,7 +42,9 @@ int main(int argc, char *argv[]) {
         }
     }
     cout << ip << "   " << port << endl;
-    chdir("请修改成main.cpp所在目录，html目录的../目录");
+    char workDir[128];
+    getcwd(workDir, 128);
+    chdir(workDir); //设置工作目录，html目录的../目录
     g_ser = new server(ip, port);
     g_ser->start();
     return 0;
