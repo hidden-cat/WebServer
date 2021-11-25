@@ -1,8 +1,8 @@
 # WebServer
 
-一个简单的、单线程的、linux系统下的web服务器
+一个单线程的、linux系统下的web服务器
 
-使用c++语言和epoll
+使用c++语言 + epoll
 
 server为主要类，大部分功能在此实现
 
