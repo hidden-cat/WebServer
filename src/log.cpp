@@ -1,6 +1,6 @@
 #include "log.h"
 
-log::log() : m_count(0) {
+log::log() : m_count(0), m_log_count(1) {
     memset(m_dir_name, '\0', sizeof(m_dir_name));
     memset(m_file_name, '\0', sizeof(m_file_name));
 }
@@ -82,17 +82,18 @@ void log::write_log(int level, const char *msg) {
         //如果是时间不是今天,则创建今天的日志。如超过了最大行,创建新的。
         if (m_today != sys_tm->tm_mday)
         {
-            char new_time[64]; //新日志时间头
-            snprintf(new_time, sizeof(new_time) - 1, "%d_%02d_%02d", sys_tm->tm_year + 1900, \
+            //新日志时间头
+            snprintf(m_file_name, sizeof(m_file_name) - 1, "%d_%02d_%02d", sys_tm->tm_year + 1900, \
         sys_tm->tm_mon + 1, sys_tm->tm_mday);
 
-            snprintf(new_log, sizeof(new_log) - 1, "%s%s%s", m_dir_name, new_time, m_file_name);
+            snprintf(new_log, sizeof(new_log) - 1, "%s%s", m_dir_name, m_file_name);
             m_today = sys_tm->tm_mday;
         }
         else
         {
-            snprintf(new_log, sizeof(new_log) - 1, "%s%s%s.%d", m_dir_name, \
-                tail, m_file_name, m_count / m_log_max);
+            snprintf(new_log, sizeof(new_log) - 1, "%s%s.%d", m_dir_name, \
+                m_file_name, m_log_count % m_log_max);
+            m_log_count++;
         }
         m_count = 0;
         m_fp = fopen(new_log, "a");
@@ -106,3 +107,4 @@ void log::write_log(int level, const char *msg) {
     fputs(msg_buf, m_fp);
     fflush(m_fp);
 }
+
