@@ -10,8 +10,6 @@
 using std::cout;
 static std::mutex g_mtx; //互斥锁
 
-//void log_err_exit(const char *msg);
-
 class log {
     public:
         log();
@@ -28,6 +26,7 @@ class log {
     private:
         int m_count;   //当前日志行数
         int m_log_max; //最大行数
+        int m_log_count; //如果日志文件大于1，日志文件后缀
         int m_today;    //因为按天分类,记录当前时间是那一天
         FILE *m_fp; //log文件指针
         char m_dir_name[128]; //log文件目录
